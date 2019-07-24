@@ -48,6 +48,10 @@
         FB.api('/me', function (response) {
           console.log(JSON.stringify(response));
         });
+        FB.api('/me/feed', function (response) {
+          console.log(response.data[0].message);
+        });
+
         // console.log(response.authResponse.accessToken)
         // console.log(response.authResponse.userID)
       } else {
