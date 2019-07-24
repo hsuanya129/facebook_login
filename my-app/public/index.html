@@ -41,8 +41,8 @@
 
     function statusChangeCallback(response) {
       if (response.status === 'connected') {
-        console.log(response.email)
-        console.log(response.public_profile)
+        console.log(response.accessToken)
+        console.log(response.userID)
       } else {
         console.log("You're not login, please login")
       }
