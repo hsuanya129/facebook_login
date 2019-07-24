@@ -19,6 +19,7 @@
       FB.init({
         appId: '2858794564190467',
         cookie: true,
+        status: true,
         xfbml: true,
         version: 'v3.3'
       });
@@ -43,15 +44,17 @@
       js = d.createElement(s); js.id = id;
       js.src = "https://connect.facebook.net/zh_TW/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk')); 
+    }(document, 'script', 'facebook-jssdk'));
 
     function statusChangeCallback(response) {
-      if (response.status === 'connected'){
+      if (response.status === 'connected') {
         console.log("Welcome!")
       }
     }
 
   </script>
+  <fb:login-button scope="public_profile,email" onlogin="checkLoginState();" data-width="" data-size="large"
+    data-button-type="login_with" data-auto-logout-link="true" data-use-continue-as="true"></fb:login-button>
   <div id="root"></div>
   <script async defer crossorigin="anonymous"
     src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v3.3&appId=2858794564190467&autoLogAppEvents=1"></script>
