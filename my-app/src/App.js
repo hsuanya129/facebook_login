@@ -11,7 +11,7 @@ class App extends React.Component{
     
     return(
       <div>
-        <div className="fb-login-button" scope="public_profile,email" onlogin="checkLoginState();" data-width="" data-size="large" data-button-type="login_with" data-auto-logout-link="true" data-use-continue-as="true"></div>
+        <div className="fb-login-button" onlogin="checkLoginState();" data-width="" data-size="large" data-button-type="login_with" data-auto-logout-link="true" data-use-continue-as="true"></div>
       </div>
     );
   }
