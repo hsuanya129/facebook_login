@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ed2a6120238820d4849be4905d1addb8",
+    "revision": "9a6db7ca728b377d046ed3eddc7f6f75",
     "url": "/facebook_login/index.html"
   },
   {
