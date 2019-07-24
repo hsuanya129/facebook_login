@@ -6,11 +6,12 @@ class App extends React.Component{
     super(props);
   }
 
+  //將設定圖形化加入，選入需求的info
   render(){
     
     return(
       <div>
-        <div className="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-auto-logout-link="true" data-use-continue-as="true"></div>
+        <div className="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-auto-logout-link="true" data-use-continue-as="true"></div>
       </div>
     );
   }

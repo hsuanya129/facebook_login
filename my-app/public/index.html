@@ -1,30 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-    <title>React App</title>
-  </head>
-  <body>
-    <script async defer src="https://connect.facebook.net/zh_TW/sdk/debug.js"></script>
-    <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId            : '2344770332405971',
-          autoLogAppEvents : true,
-          xfbml            : false,
-          version          : 'v3.3'
+<head>
+  <meta charset="utf-8" />
+  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+  <title>React App</title>
+</head>
+
+<body>
+  <script async defer src="https://connect.facebook.net/zh_TW/sdk/debug.js"></script>
+  <script>
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: '2858794564190467',
+        cookie: true,
+        xfbml: true,
+        version: 'v3.3'
+      });
+
+      FB.AppEvents.logPageView();
+
+
+      FB.getLoginStatus(function (response) {
+        statusChangeCallback(response);
+        console.log("***Login status:***")
+        console.log(response)
+        console.log(response.status)
+        console.log("***Login status:***")
+      });
+
+      function checkLoginState() {
+        FB.getLoginStatus(function (response) {
+          statusChangeCallback(response);
         });
-        //把一些FB...的function 寫在這裡，否則會undefined 
-      };
-    </script> 
-    <div id="root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v3.3"></script>
-    
+      }
 
-  </body>
+    };
+
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) { return; }
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/zh_TW/sdk/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk')); 
+  </script>
+  <div id="root"></div>
+  <script async defer crossorigin="anonymous"
+    src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v3.3&appId=2858794564190467&autoLogAppEvents=1"></script>
+
+
+</body>
+
 </html>
