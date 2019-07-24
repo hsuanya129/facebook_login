@@ -29,13 +29,6 @@
         statusChangeCallback(response);
       });
 
-
-      function checkLoginState() {
-        FB.getLoginStatus(function (response) {
-          statusChangeCallback(response);
-        });
-      }
-
     };
 
     (function (d, s, id) {
@@ -51,6 +44,12 @@
         console.log("Welcome!")
       }
     }
+
+    function checkLoginState() {
+        FB.getLoginStatus(function (response) {
+          statusChangeCallback(response);
+        });
+      }
 
   </script>
   <fb:login-button scope="public_profile,email" onlogin="checkLoginState();" data-width="" data-size="large"
