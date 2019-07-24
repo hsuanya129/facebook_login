@@ -24,14 +24,10 @@
 
       FB.AppEvents.logPageView();
 
-
-      FB.getLoginStatus(function (response) {
-        statusChangeCallback(response);
-        console.log("***Login status:***")
-        console.log(response)
-        console.log(response.status)
-        console.log("***Login status:***")
-      });
+      function statusChangeCallback(response){
+        console.log("****show status:");
+        console.log(response);
+      }
 
       function checkLoginState() {
         FB.getLoginStatus(function (response) {
