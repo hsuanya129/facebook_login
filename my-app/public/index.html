@@ -13,7 +13,7 @@
 
 <body>
   <div id="fb-root"></div>
-  <script async defer src="https://connect.facebook.net/zh_TW/sdk/debug.js"></script>
+  <script async defer src="https://connect.facebook.net/zh_TW/sdk.js"></script>
   <script>
     window.fbAsyncInit = function () {
       FB.init({
@@ -25,10 +25,6 @@
 
       FB.AppEvents.logPageView();
 
-      function statusChangeCallback(response){
-        console.log("****show status:");
-        console.log(response);
-      }
 
       function checkLoginState() {
         FB.getLoginStatus(function (response) {
@@ -37,12 +33,17 @@
       }
 
     };
+    
+      function statusChangeCallback(response){
+        console.log("****show status:");
+        console.log(response);
+      }
 
     (function (d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) { return; }
       js = d.createElement(s); js.id = id;
-      js.src = "https://connect.facebook.net/zh_TW/sdk/debug.js";
+      js.src = "https://connect.facebook.net/zh_TW/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk')); 
   </script>
