@@ -46,8 +46,9 @@
     }(document, 'script', 'facebook-jssdk')); 
 
     function statusChangeCallback(response) {
-      console.log("****show status:");
-      console.log(response);
+      if (response.status === 'connected'){
+        console.log("Welcome!")
+      }
     }
 
   </script>
