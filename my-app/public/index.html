@@ -22,8 +22,11 @@
         xfbml: true,
         version: 'v3.3'
       });
+      // FB.AppEvents.logPageView();
 
-      FB.AppEvents.logPageView();
+      FB.getLoginStatus(function (response) {
+        statusChangeCallback(response);
+      });
 
 
       function checkLoginState() {
@@ -33,11 +36,6 @@
       }
 
     };
-    
-      function statusChangeCallback(response){
-        console.log("****show status:");
-        console.log(response);
-      }
 
     (function (d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
@@ -46,6 +44,12 @@
       js.src = "https://connect.facebook.net/zh_TW/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk')); 
+
+    function statusChangeCallback(response) {
+      console.log("****show status:");
+      console.log(response);
+    }
+
   </script>
   <div id="root"></div>
   <script async defer crossorigin="anonymous"
