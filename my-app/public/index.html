@@ -28,6 +28,10 @@
       FB.getLoginStatus(function (response) {
         statusChangeCallback(response);
       });
+      FB.api('/me', function (response) {
+        console.log(JSON.stringify(response));
+      });
+
 
     };
 
@@ -41,18 +45,21 @@
 
     function statusChangeCallback(response) {
       if (response.status === 'connected') {
-        console.log(response.authResponse.accessToken)
-        console.log(response.authResponse.userID)
+        FB.api('/me', function (response) {
+          console.log(JSON.stringify(response));
+        });
+        // console.log(response.authResponse.accessToken)
+        // console.log(response.authResponse.userID)
       } else {
         console.log("You're not login, please login")
       }
     }
 
     function checkLoginState() {
-        FB.getLoginStatus(function (response) {
-          statusChangeCallback(response);
-        });
-      }
+      FB.getLoginStatus(function (response) {
+        statusChangeCallback(response);
+      });
+    }
 
   </script>
   <fb:login-button scope="public_profile,email" onlogin="checkLoginState();" data-width="" data-size="large"
