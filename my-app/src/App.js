@@ -11,10 +11,8 @@ class App extends React.Component{
   render(){
     
     return(
-      <div>
-      <p>Hi</p>
+      <div className='App'>
         <Login />
-        <Posts />
       </div>
     );
   }

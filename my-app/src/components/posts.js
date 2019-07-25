@@ -7,10 +7,12 @@ class Posts extends React.Component{
   }
 
   render(){
-    
+    console.log(this.props.data)
+    const data=''
+    // const data = this.props.data.map((item)=><Post data={item} />)
     return(
       <div>
-        <Post/>
+        {data}
       </div>
     );
   }
