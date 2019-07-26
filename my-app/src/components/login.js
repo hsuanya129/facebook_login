@@ -28,15 +28,16 @@ class Login extends React.Component {
 
             //Called at the fb initialization, to check if user has login or not
             window.FB.getLoginStatus(function (response) {
+                
                 if (response.status === 'connected') {
                     window.FB.api('/me', function (response) {
                         window.Login.setState({
                             hint:response.name
                         });
                     });
-                    window.FB.api('/me/feed', function (response) {
+                    window.FB.api('/me','GET',{"fields":"feed{picture,created_time,message,from}"}, function (response) {
                         window.Login.setState({
-                            posts_data: response.data
+                            posts_data: response.feed.data
                         });
                     });
                 } else {
@@ -56,13 +57,13 @@ class Login extends React.Component {
                             hint:response.name
                         });
                     });
-                    window.FB.api('/me/feed', function (response) {
+                    window.FB.api('/me','GET',{"fields":"feed{picture,created_time,message,from}"}, function (response) {
                         window.Login.setState({
-                            posts_data: response.data
+                            posts_data: response.feed.data
                         });
+                        
                     });
                 } else {
-                    console.log("You're not login, please login")
                     window.Login.setState({
                         posts_data: [],
                         hint:''
@@ -76,7 +77,7 @@ class Login extends React.Component {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) { return; }
             js = d.createElement(s); js.id = id;
-            js.src = "https://connect.facebook.net/zh_TW/sdk.js";
+            js.src = "https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v3.3&appId=2858794564190467&autoLogAppEvents=1";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
 
@@ -88,7 +89,7 @@ class Login extends React.Component {
             <div>
                 <div
                     className="fb-login-button"
-                    data-scope="public_profile,email,user_posts"
+                    scope="public_profile,email,user_posts"
                     data-width=""
                     data-size="large"
                     data-button-type="login_with"

@@ -7,11 +7,10 @@ class Posts extends React.Component{
   }
 
   render(){
-    console.log(this.props.data)
     var greeting
     (this.props.hint === '') ? greeting='Login now!' : greeting="Hello "+this.props.hint
 
-    const data = this.props.data.map((item,index)=><Post key={index} data={item} />)
+    const data = this.props.data.map((item)=><Post key={item.id} data={item} />)
     return(
       <div>
         <h1>{greeting}</h1>
