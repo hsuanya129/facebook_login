@@ -7,8 +7,8 @@ class Post extends React.Component{
   }
 
   render(){
-    const date_temp = Date.parse(this.props.data.created_time)
-    const date = new Date(date_temp)
+    const date_temp = Date.parse(this.props.data.created_time);
+    const date = new Date(date_temp);
     
     
     return(

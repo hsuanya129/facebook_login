@@ -9,7 +9,7 @@ class Login extends React.Component {
         this.state = {
             posts_data: [],
             hint:'',
-        }
+        };
         //To activate its methods from outside(window)
         window.Login = this;
     }
