@@ -10,7 +10,7 @@ class Post extends React.Component{
     
     return(
       <div>
-        <p>{this.props.data}</p>
+        <p>{this.props.data.message}</p>
       </div>
     );
   }

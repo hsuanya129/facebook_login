@@ -7,12 +7,16 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            posts_data: '',
+            posts_data: [],
+            hint:'',
         }
-
+        //To activate its methods from outside(window)
+        window.Login = this;
     }
+
     componentDidMount() {
-        //initialize
+
+        //Initialize
         window.fbAsyncInit = function () {
             window.FB.init({
                 appId: '2858794564190467',
@@ -22,44 +26,52 @@ class Login extends React.Component {
                 version: 'v3.3'
             });
 
-            //called at the fb initialization 
+            //Called at the fb initialization, to check if user has login or not
             window.FB.getLoginStatus(function (response) {
                 if (response.status === 'connected') {
                     window.FB.api('/me', function (response) {
-                        console.log(JSON.stringify(response));
+                        window.Login.setState({
+                            hint:response.name
+                        });
                     });
                     window.FB.api('/me/feed', function (response) {
-                        const posts = response.data;
-                        for (let post of posts) {
-                            console.log(post)
-                        }
+                        window.Login.setState({
+                            posts_data: response.data
+                        });
                     });
                 } else {
-                    console.log("You're not login, please login")
+                    window.Login.setState({
+                        posts_data: [],
+                        hint:''
+                    });
                 }
             });
 
-            //eventListener to user login or logout, TODO: try to seperate repeated code into a independent function
+            //EventListener to check user login or logout, TODO: try to seperate repeated code into an independent function
+            //Because login button can't call 'onlogin' in react
             window.FB.Event.subscribe('auth.statusChange', function (response) {
                 if (response.status === 'connected') {
                     window.FB.api('/me', function (response) {
-                        console.log(JSON.stringify(response));
+                        window.Login.setState({
+                            hint:response.name
+                        });
                     });
                     window.FB.api('/me/feed', function (response) {
-                        const posts = response.data;
-                        for (let post of posts) {
-                            console.log(post)
-                        }
-                        // Login.setState({
-                        //     posts_data: posts
-                        // });
+                        window.Login.setState({
+                            posts_data: response.data
+                        });
                     });
                 } else {
                     console.log("You're not login, please login")
+                    window.Login.setState({
+                        posts_data: [],
+                        hint:''
+                    });
                 }
             })
         };
 
+        //Part of initializaion of fb
         (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) { return; }
@@ -83,7 +95,7 @@ class Login extends React.Component {
                     data-auto-logout-link="true"
                     data-use-continue-as="true">
                 </div>
-                <Posts data={this.state.posts_data} />
+                <Posts data={this.state.posts_data} hint={this.state.hint} />
             </div>
         )
     }
