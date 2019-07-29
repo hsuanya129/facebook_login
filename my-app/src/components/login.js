@@ -22,8 +22,7 @@ class Login extends React.Component {
                 });
             });
 
-            window.FB.api(`/me`, 'GET', { "fields": "feed{picture,created_time,message,from}" }, (response) => {
-                console.log(response);
+            window.FB.api(`/me`, 'GET', { "fields": "feed{full_picture,created_time,message,from}" }, (response) => {
                 let posts;
                 (response.feed) ? posts = response.feed.data : posts = "no posts";
                 this.setState({

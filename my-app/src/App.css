@@ -50,3 +50,9 @@
 
 }
 
+.full_picture{
+  object-fit: contain;
+  max-width: 500px;
+  max-height: 700px;
+}
+
