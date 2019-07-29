@@ -1,5 +1,4 @@
 import React from 'react';
-import FB from 'fb';
 import '../App.css';
 import Posts from './posts';
 
@@ -14,6 +13,26 @@ class Login extends React.Component {
         window.Login = this;
     }
 
+    fetchPosts = (response) => {
+        if (response.status === 'connected') {
+            window.FB.api('/me', function (response) {
+                window.Login.setState({
+                    hint:response.name
+                });
+            });
+            window.FB.api('/me','GET',{"fields":"feed{picture,created_time,message,from}"}, function (response) {
+                window.Login.setState({
+                    posts_data: response.feed.data
+                });
+            });
+        } else {
+            window.Login.setState({
+                posts_data: [],
+                hint:''
+            });
+        }
+    }
+
     componentDidMount() {
 
         //Initialize
@@ -25,51 +44,19 @@ class Login extends React.Component {
                 xfbml: true,
                 version: 'v3.3'
             });
+            this.console.log(this)
 
             //Called at the fb initialization, to check if user has login or not
             window.FB.getLoginStatus(function (response) {
-                
-                if (response.status === 'connected') {
-                    window.FB.api('/me', function (response) {
-                        window.Login.setState({
-                            hint:response.name
-                        });
-                    });
-                    window.FB.api('/me','GET',{"fields":"feed{picture,created_time,message,from}"}, function (response) {
-                        window.Login.setState({
-                            posts_data: response.feed.data
-                        });
-                    });
-                } else {
-                    window.Login.setState({
-                        posts_data: [],
-                        hint:''
-                    });
-                }
+                window.Login.fetchPosts(response);
             });
 
-            //EventListener to check user login or logout, TODO: try to seperate repeated code into an independent function
+            //EventListener to check user login or logout,
             //Because login button can't call 'onlogin' in react
             window.FB.Event.subscribe('auth.statusChange', function (response) {
-                if (response.status === 'connected') {
-                    window.FB.api('/me', function (response) {
-                        window.Login.setState({
-                            hint:response.name
-                        });
-                    });
-                    window.FB.api('/me','GET',{"fields":"feed{picture,created_time,message,from}"}, function (response) {
-                        window.Login.setState({
-                            posts_data: response.feed.data
-                        });
-                        
-                    });
-                } else {
-                    window.Login.setState({
-                        posts_data: [],
-                        hint:''
-                    });
-                }
+                window.Login.fetchPosts(response);
             })
+            this.console.log(this.FB)
         };
 
         //Part of initializaion of fb
