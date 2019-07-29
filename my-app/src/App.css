@@ -24,6 +24,7 @@
   border-width: 3px;
   border-color: rgb(255, 255, 255);
   text-align: left;
+  margin: 0px;
   margin-left:50px;
   margin-right:50px;
   padding: 10px;
@@ -46,7 +47,6 @@
   font-family:Georgia, 'Times New Roman', Times, serif;
   color: white;
   font-size:16px;
-
 
 }
 
