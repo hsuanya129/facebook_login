@@ -15,6 +15,7 @@ class Login extends React.Component {
     }
 
 
+    
     //Detect if connected or not, and save data of posts into this.state
     fetchPosts = (response) => {
         this.setState({
@@ -30,7 +31,6 @@ class Login extends React.Component {
             });
 
             window.FB.api('/me/permissions', 'GET', (response) => {
-                console.log(response);
                 let permission = response.data.find((item) => item.permission === 'user_posts').status;
                 this.setState({
                     permission
@@ -78,7 +78,7 @@ class Login extends React.Component {
             //Because login button can't call 'onlogin' in react
             window.FB.Event.subscribe('auth.statusChange', (response) => {
                 this.fetchPosts(response);
-            })
+            });
         };
 
         //Part of initializaion of fb
@@ -99,7 +99,7 @@ class Login extends React.Component {
             <div>
                 <div
                     className="fb-login-button"
-                    data-scope="public_profile,email,user_posts" //it works
+                    data-scope="public_profile,email,user_posts"
                     data-width=""
                     data-size="large"
                     data-button-type="login_with"

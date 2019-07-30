@@ -14,65 +14,6 @@
 <body>
   <div id="root"></div>
   <div id="fb-root"></div>
-  <!-- <script async defer src="https://connect.facebook.net/zh_TW/sdk.js"></script> -->
-  <!-- <script>
-    window.fbAsyncInit = function () {
-      FB.init({
-        appId: '2858794564190467',
-        cookie: true,
-        status: true,
-        xfbml: true,
-        version: 'v3.3'
-      });
-      // FB.AppEvents.logPageView();
-
-      FB.getLoginStatus(function (response) {
-        statusChangeCallback(response);
-      });
-
-    };
-
-    (function (d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) { return; }
-      js = d.createElement(s); js.id = id;
-      js.src = "https://connect.facebook.net/zh_TW/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-    function statusChangeCallback(response) {
-      if (response.status === 'connected') {
-        FB.api('/me', function (response) {
-          console.log(JSON.stringify(response));
-        });
-        FB.api('/me/feed', function (response) {
-          const posts = response.data;
-          for(let post of posts){
-            console.log(post)
-          }
-        });
-
-        // console.log(response.authResponse.accessToken)
-        // console.log(response.authResponse.userID)
-      } else {
-        console.log("You're not login, please login")
-      }
-    }
-
-    function checkLoginState() {
-      FB.getLoginStatus(function (response) {
-        statusChangeCallback(response);
-      });
-    }
-
-  </script>
-  <fb:login-button scope="public_profile,email,user_posts" onlogin="checkLoginState();" data-width="" data-size="large"
-    data-button-type="login_with" data-auto-logout-link="true" data-use-continue-as="true"></fb:login-button> -->
-  
-  <!-- <script async defer crossorigin="anonymous"
-    src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v3.3&appId=2858794564190467&autoLogAppEvents=1"></script> -->
-
-
 </body>
 
 </html>

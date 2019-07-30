@@ -6,10 +6,10 @@ class Posts extends React.Component {
     super(props);
   }
 
+  //fired when user didn't agree the permission of user_posts, and clicked rerequest button 
   reRequest = () => {
     window.FB.login((response) => {
-      console.log(response);
-      this.props.reGrant();
+      this.props.reGrant(response);
     }, {
       scope: 'user_posts',
       auth_type: 'rerequest'
@@ -27,7 +27,7 @@ class Posts extends React.Component {
       if (this.props.permission === 'declined') {
 
         btn = <button onClick={this.reRequest}>Rerequest</button>
-        data = `You have to grant us permission for posts first \n`;
+        data = `You have to grant us permission for posts first, click the button below to continue`;
       } else if (this.props.data === 'no posts') {
         data = "You haven't posted anything yet.";
       } else {
