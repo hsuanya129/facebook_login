@@ -9,11 +9,17 @@ class Login extends React.Component {
         this.state = {
             posts_data: [],
             user_name: '',
+            authentication:'',
+            permission:''
         };
     }
 
     //Detect if connected or not, and save data of posts into this.state
     fetchPosts = (response) => {
+        this.setState({
+                authentication:response.status
+            });
+
         if (response.status === 'connected') {
 
             window.FB.api(`/me`, (response) => {
@@ -22,7 +28,16 @@ class Login extends React.Component {
                 });
             });
 
+            //TODO1: write a permission detection that fits all kinds of permission
+            window.FB.api('/me/permissions','GET',(response) => {
+                console.log(response.data);
+            });
+
+            
+
+            //TODO2: insert the permission detection func, run before api send
             window.FB.api(`/me`, 'GET', { "fields": "feed{full_picture,created_time,message,from}" }, (response) => {
+                console.log(response);
                 let posts;
                 (response.feed) ? posts = response.feed.data : posts = "no posts";
                 this.setState({
@@ -30,16 +45,16 @@ class Login extends React.Component {
                 });
             });
             
-        } else if(response.status === 'unknown') {
+        //for authentication equals unknown or not_authorized
+        } else { 
             this.setState({
                 posts_data: [],
                 user_name: ''
             });
-        }
+        } 
     }
 
     componentDidMount() {
-
         //Initialize
         window.fbAsyncInit = () => { 
             window.FB.init({
@@ -69,6 +84,7 @@ class Login extends React.Component {
             js = d.createElement(s); js.id = id;
             js.src = "https://connect.facebook.net/zh_TW/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
+            
         }(document, 'script', 'facebook-jssdk'));
 
 
@@ -79,14 +95,14 @@ class Login extends React.Component {
             <div>
                 <div
                     className="fb-login-button"
-                    scope="public_profile,email,user_posts"
+                    data-scope="public_profile,email,user_posts" //it works
                     data-width=""
                     data-size="large"
                     data-button-type="login_with"
                     data-auto-logout-link="true"
                     data-use-continue-as="true">
                 </div>
-                <Posts data={this.state.posts_data} user_name={this.state.user_name} />
+                <Posts data={this.state.posts_data} user_name={this.state.user_name} authentication={this.state.authentication}/>
             </div>
         )
     }
