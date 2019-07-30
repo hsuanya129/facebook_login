@@ -30,6 +30,7 @@ class Login extends React.Component {
             });
 
             window.FB.api('/me/permissions', 'GET', (response) => {
+                console.log(response);
                 let permission = response.data.find((item) => item.permission === 'user_posts').status;
                 this.setState({
                     permission
@@ -39,7 +40,6 @@ class Login extends React.Component {
                     return;
                 } else {
                     window.FB.api(`/me`, 'GET', { "fields": "feed{full_picture,created_time,message,from}" }, (response) => {
-                        console.log(response);
                         let posts;
                         (response.feed) ? posts = response.feed.data : posts = "no posts";
                         this.setState({
@@ -106,7 +106,7 @@ class Login extends React.Component {
                     data-auto-logout-link="true"
                     data-use-continue-as="true">
                 </div>
-                <Posts data={this.state.posts_data} user_name={this.state.user_name} auth={this.state.auth} permission={this.state.permission} />
+                <Posts data={this.state.posts_data} user_name={this.state.user_name} auth={this.state.auth} permission={this.state.permission} reGrant={this.fetchPosts}/>
             </div>
         )
     }
