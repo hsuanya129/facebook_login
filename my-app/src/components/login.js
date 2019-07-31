@@ -22,7 +22,7 @@ class Login extends React.Component {
         });
     }
 
-    //test permit of category, and return declined/granted
+    //test permission of certain data access (e.g. eamil, posts, friends), and return declined/granted
     permitTest = (category) => {
         window.FB.api('/me/permissions', 'GET', (response) => {
             let permission = response.data.find((item) => item.permission === category).status;
@@ -56,7 +56,6 @@ class Login extends React.Component {
     //for denied permission re-request permission again
     reRequest = () => {
         window.FB.login((response) => {
-            this.fetchPosts(response);
         }, {
             scope: 'user_posts',
             auth_type: 'rerequest'
@@ -102,12 +101,13 @@ class Login extends React.Component {
                 this.fetchPosts(response);
             });
 
-            // window.FB.Event.subscribe('auth.authResponseChange', (response) => {
-            //     this.fetchPosts(response);
-            // });
+            //Called when user's accessToken changes
+            window.FB.Event.subscribe('auth.authResponseChange', (response) => {
+                this.fetchPosts(response);
+            });
 
             //EventListener to check user login or logout,
-            //Because login button can't call 'onlogin' in react
+            //Because login button can't using 'onlogin' property in react
             window.FB.Event.subscribe('auth.statusChange', (response) => {
                 this.fetchPosts(response);
             });

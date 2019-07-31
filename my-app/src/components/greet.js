@@ -1,7 +1,7 @@
 import React from 'react';
 import './../App.css'
 
-//Handling greeting area, show wether user has authorized/logged in this app or not
+//Handling greeting area, show wether user has authorized/logged in this app/fb or not
 class Greet extends React.Component {
     constructor(props) {
         super(props);

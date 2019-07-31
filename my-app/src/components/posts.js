@@ -7,7 +7,6 @@ class Posts extends React.Component {
     super(props);
   }
 
-  //fired when user didn't agree the permission of user_posts, and clicked rerequest button 
 
   render() {
     let data;
