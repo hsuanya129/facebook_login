@@ -1,8 +1,9 @@
 import React from 'react';
 import '../App.css';
 import Posts from './posts';
+import Greet from './greet';
 
-
+//Handling page that including facebook login function
 class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -14,42 +15,69 @@ class Login extends React.Component {
         };
     }
 
+    //connected/not_auth/unknown
+    getAuth = (response) => {
+        this.setState({
+            auth:response.status
+        });
+    }
+
+    //test permit of category, and return declined/granted
+    permitTest = (category) => {
+        window.FB.api('/me/permissions', 'GET', (response) => {
+            let permission = response.data.find((item) => item.permission === category).status;
+            this.setState({
+                permission
+            });
+            return permission;
+        });
+    }
+
+    //get the name of user, for greeting
+    getName = () => {
+        window.FB.api(`/me`, (response) => {
+            this.setState({
+                user_name: response.name
+            });
+        });
+    }
+
+    //get posts data of user
+    getPosts = () => {
+        window.FB.api(`/me`, 'GET', { "fields": "feed{full_picture,created_time,message,from}" }, (response) => {
+            let posts;
+            (response.feed) ? posts = response.feed.data : posts = "no posts";
+            this.setState({
+                posts_data: posts
+            });
+        });
+    }
+
+    //for denied permission re-request permission again
+    reRequest = () => {
+        window.FB.login((response) => {
+            this.fetchPosts(response);
+        }, {
+            scope: 'user_posts',
+            auth_type: 'rerequest'
+          });
+    }
 
     
-    //Detect if connected or not, and save data of posts into this.state
+    //Integrate the methods of above to form a fetchPosts method
     fetchPosts = (response) => {
-        this.setState({
-            auth: response.status
-        });
+        this.getAuth(response);
 
         if (response.status === 'connected') {
+            this.getName();
 
-            window.FB.api(`/me`, (response) => {
-                this.setState({
-                    user_name: response.name
-                });
-            });
+             if (this.permitTest('user_posts') === 'declined'){
+                return;
+             } else {
+                this.getPosts();
+             }
 
-            window.FB.api('/me/permissions', 'GET', (response) => {
-                let permission = response.data.find((item) => item.permission === 'user_posts').status;
-                this.setState({
-                    permission
-                });
-
-                if (permission === 'declined') {
-                    return;
-                } else {
-                    window.FB.api(`/me`, 'GET', { "fields": "feed{full_picture,created_time,message,from}" }, (response) => {
-                        let posts;
-                        (response.feed) ? posts = response.feed.data : posts = "no posts";
-                        this.setState({
-                            posts_data: posts
-                        });
-                    });
-                }
-            });
-
-            //for authentication equals unknown or not_authorized
+        //for authentication equals unknown or not_authorized
         } else {
             this.setState({
                 posts_data: [],
@@ -74,6 +102,10 @@ class Login extends React.Component {
                 this.fetchPosts(response);
             });
 
+            // window.FB.Event.subscribe('auth.authResponseChange', (response) => {
+            //     this.fetchPosts(response);
+            // });
+
             //EventListener to check user login or logout,
             //Because login button can't call 'onlogin' in react
             window.FB.Event.subscribe('auth.statusChange', (response) => {
@@ -88,7 +120,6 @@ class Login extends React.Component {
             js = d.createElement(s); js.id = id;
             js.src = "https://connect.facebook.net/zh_TW/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
-
         }(document, 'script', 'facebook-jssdk'));
 
 
@@ -106,7 +137,8 @@ class Login extends React.Component {
                     data-auto-logout-link="true"
                     data-use-continue-as="true">
                 </div>
-                <Posts data={this.state.posts_data} user_name={this.state.user_name} auth={this.state.auth} permission={this.state.permission} reGrant={this.fetchPosts}/>
+                <Greet auth={this.state.auth} user_name={this.state.user_name}/>
+                <Posts data={this.state.posts_data} auth={this.state.auth} permission={this.state.permission} reRequest={this.reRequest}/>
             </div>
         )
     }

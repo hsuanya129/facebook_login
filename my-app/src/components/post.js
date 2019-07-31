@@ -1,6 +1,7 @@
 import React from 'react';
 import './../App.css'
 
+//Handling single post
 class Post extends React.Component{
   constructor(props){
     super(props);
